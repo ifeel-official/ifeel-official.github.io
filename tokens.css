@@ -113,9 +113,20 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   margin: 0;
+  word-break: keep-all;
+  overflow-wrap: normal;
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after {
+  box-sizing: border-box;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+/* Allow breaks for very long unbroken strings (URLs, English words) only when needed */
+p, li, dd, td, th, blockquote, figcaption {
+  overflow-wrap: break-word;
+}
 
 :focus-visible {
   outline: none;

@@ -9,7 +9,11 @@ function PhoneFrame({ children, screenStyle }) {
       <div className="phone-screen" style={screenStyle}>
         <div className="phone-status-bar">
           <span>8:47</span>
-          <span>●●●●●</span>
+          <span className="phone-status-icons" aria-hidden="true">
+            <svg width="16" height="10" viewBox="0 0 16 10" fill="currentColor"><rect x="0" y="6" width="2.5" height="4" rx="0.5"/><rect x="3.5" y="4" width="2.5" height="6" rx="0.5"/><rect x="7" y="2" width="2.5" height="8" rx="0.5"/><rect x="10.5" y="0" width="2.5" height="10" rx="0.5"/></svg>
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><path d="M1 4 A8 8 0 0 1 13 4"/><path d="M3 6 A5 5 0 0 1 11 6"/><path d="M5 8 A2 2 0 0 1 9 8"/></svg>
+            <svg width="22" height="10" viewBox="0 0 22 10" fill="none"><rect x="0.5" y="0.5" width="18" height="9" rx="2" stroke="currentColor" strokeWidth="1"/><rect x="2" y="2" width="15" height="6" rx="1" fill="currentColor"/><rect x="19.5" y="3.5" width="1.5" height="3" rx="0.5" fill="currentColor"/></svg>
+          </span>
         </div>
         {children}
       </div>

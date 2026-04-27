@@ -162,83 +162,36 @@ function HeroVisual() {
   );
 }
 
-// ---------- Showcase tab switcher ----------
+// ---------- Showcase: single feature (AI scan) ----------
 function Showcase() {
-  const [tab, setTab] = useState("scan");
-
-  const tabs = [
-    { id: "scan", num: "01", label: "AI 스캐닝" },
-    { id: "alert", num: "02", label: "실시간 경고" },
-    { id: "dash", num: "03", label: "대시보드 전환" },
-  ];
-
   const copy = {
-    scan: {
-      h: "약병에 손을 대면, 이름을 들려드립니다.",
-      p: "카메라가 약병을 인식하면 AI가 2만 종 이상의 의약품 데이터베이스에서 0.8초 안에 식별합니다. 약 이름, 용량, 복약법, 주의사항이 음성과 함께 화면에 출력됩니다.",
-      i: [
-        { k: "탭", t: "약병 위에 마우스를 올리거나 탭하면 스캔이 시작됩니다." },
-        { k: "0.8s", t: "AI 모델이 형태·텍스트·바코드를 동시에 분석합니다." },
-        { k: "🔊", t: "스피커 버튼을 누르면 모든 정보를 음성으로 다시 들을 수 있습니다." },
-      ],
-    },
-    alert: {
-      h: "한 번의 실수도 용납하지 않는, 즉각적 경고.",
-      p: "복약 내역과 처방전을 실시간으로 대조해 중복·과다·금기 복용을 감지합니다. 화면이 흔들리는 시각적 피드백, 강한 햅틱 진동, 그리고 음성 경고가 동시에 작동합니다.",
-      i: [
-        { k: "트리거", t: "‘중복 복용 시뮬레이션’ 버튼으로 경고 인터랙션을 확인할 수 있습니다." },
-        { k: "촉각", t: "퍼져나가는 링이 스마트폰의 진동 패턴을 시각화합니다." },
-        { k: "확인", t: "경고는 두 번 탭으로만 해제됩니다 — 의도된 마찰입니다." },
-      ],
-    },
-    dash: {
-      h: "두 사람을 위한, 하나의 진실.",
-      p: "동일한 데이터가 사용자에겐 ‘들리는 큰 글씨’로, 보호자와 의료진에겐 ‘읽히는 그래프’로 보여집니다. 토글 한 번이면 모드를 전환할 수 있고, 데이터는 실시간으로 동기화됩니다.",
-      i: [
-        { k: "토글", t: "상단 버튼으로 두 모드를 즉시 전환할 수 있습니다." },
-        { k: "고대비", t: "본문 18px 최소, AAA 명도 대비, 단일 액센트 컬러." },
-        { k: "보호자", t: "복약 준수율, 차단된 오복용, 실시간 로그까지 한눈에." },
-      ],
-    },
-  }[tab];
-
-  const Active = { scan: AIScanPreview, alert: AlertPreview, dash: DashboardPreview }[tab];
+    h: "약병을 카메라로 촬영하면, 이름을 들려드립니다.",
+    p: "스마트폰 카메라로 약병을 비추면 iFeel의 AI가 라벨의 텍스트·형태·바코드를 동시에 분석해 0.8초 안에 의약품을 식별합니다. 약 이름, 용량, 복약 시간, 금기사항을 즉시 음성으로 안내하며, 동시에 화면에는 고대비 큰 글씨로 표시됩니다.",
+    i: [
+      { k: "AI 식별", t: "2만 종 이상의 국내 의약품 데이터베이스와 대조해 정확도 99.2%로 약을 인식합니다." },
+      { k: "음성 안내", t: "식별 결과를 자연스러운 한국어 음성으로 자동 재생합니다. 스피커 버튼으로 다시 듣기도 가능합니다." },
+      { k: "복약 가이드", t: "처방된 용량·복용 시간·식전·식후·주의사항까지 한 번에 안내합니다." },
+    ],
+  };
 
   return (
-    <>
-      <div className="showcase-tabs" role="tablist">
-        {tabs.map(t => (
-          <button
-            key={t.id}
-            role="tab"
-            aria-selected={tab === t.id}
-            className={`showcase-tab ${tab === t.id ? "active" : ""}`}
-            onClick={() => setTab(t.id)}
-          >
-            <span className="tnum">{t.num}</span>
-            {t.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="showcase-stage">
-        <div className="showcase-copy">
-          <h3>{copy.h}</h3>
-          <p>{copy.p}</p>
-          <div className="showcase-instructions">
-            {copy.i.map((it,i) => (
-              <div className="instr" key={i}>
-                <span className="k">{it.k}</span>
-                <span className="t">{it.t}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="showcase-preview">
-          <Active />
+    <div className="showcase-stage">
+      <div className="showcase-copy">
+        <h3>{copy.h}</h3>
+        <p>{copy.p}</p>
+        <div className="showcase-instructions">
+          {copy.i.map((it,i) => (
+            <div className="instr" key={i}>
+              <span className="k">{it.k}</span>
+              <span className="t">{it.t}</span>
+            </div>
+          ))}
         </div>
       </div>
-    </>
+      <div className="showcase-preview">
+        <AIScanPreview />
+      </div>
+    </div>
   );
 }
 

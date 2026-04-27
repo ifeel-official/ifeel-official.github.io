@@ -69,11 +69,12 @@ function AlertPreview() {
         {/* Alert modal */}
         {state === "alert" && (
           <div className="alert-overlay" role="alertdialog" aria-live="assertive">
-            <div className="haptic-ring r1" />
-            <div className="haptic-ring r2" />
-            <div className="haptic-ring r3" />
+            <div className="alert-shake">
+              <div className="haptic-ring r1" />
+              <div className="haptic-ring r2" />
+              <div className="haptic-ring r3" />
 
-            <div className="alert-modal">
+              <div className="alert-modal">
               <div className="alert-icon">
                 <Glyph name="warn" size={36} color="#FFFFFF" stroke={2.6} />
               </div>
@@ -102,6 +103,7 @@ function AlertPreview() {
                 <button className="alert-btn ghost" onClick={dismiss}>
                   보호자에게 알림
                 </button>
+              </div>
               </div>
             </div>
           </div>
@@ -171,8 +173,14 @@ function AlertPreview() {
 
         .alert-overlay {
           position: absolute; inset: 0;
+          /* Extend upwards to cover the phone status bar */
+          top: -52px;
           background: rgba(10,27,51,0.55);
           backdrop-filter: blur(2px);
+          display: grid; place-items: center;
+        }
+        .alert-shake {
+          position: absolute; inset: 0;
           display: grid; place-items: center;
           animation: shakeFrame 0.14s linear 0s 8;
         }
@@ -260,6 +268,7 @@ function AlertPreview() {
           padding: 10px 18px; border-radius: 999px;
           font-size: 13px; font-weight: 600;
           display: inline-flex; align-items: center; gap: 8px;
+          white-space: nowrap;
           box-shadow: 0 8px 20px rgba(15,138,95,0.3);
           animation: toastIn 240ms var(--ease-out);
         }

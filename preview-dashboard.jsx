@@ -8,6 +8,10 @@ function DashboardPreview() {
 
   return (
     <div className="dash-preview">
+      <PhoneFrame screenStyle={mode === "contrast" ? { background: "#000" } : undefined}>
+        {mode === "contrast" ? <ContrastView /> : <DetailView />}
+      </PhoneFrame>
+
       <div className="dash-toggle" role="tablist">
         <button
           role="tab"
@@ -27,20 +31,23 @@ function DashboardPreview() {
         </button>
       </div>
 
-      <PhoneFrame screenStyle={mode === "contrast" ? { background: "#000" } : undefined}>
-        {mode === "contrast" ? <ContrastView /> : <DetailView />}
-      </PhoneFrame>
-
       <style>{`
         .dash-preview {
-          display: flex; flex-direction: column; align-items: center; gap: 20px;
+          display: flex; flex-direction: column; align-items: center;
+          position: relative;
         }
         .dash-toggle {
+          position: absolute;
+          bottom: -56px;
+          left: 50%;
+          transform: translateX(-50%);
           display: inline-flex; gap: 4px;
           background: var(--white);
           border: 1px solid var(--hairline);
           border-radius: 999px;
           padding: 4px;
+          z-index: 2;
+          box-shadow: 0 4px 16px rgba(10,27,51,0.08);
         }
         .dash-toggle-btn {
           border: none; background: transparent;

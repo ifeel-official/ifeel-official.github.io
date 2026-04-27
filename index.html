@@ -5,8 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>iFeel — 안심 복약 ‘약속’</title>
 <meta name="description" content="눈이 아닌 기술로 읽습니다. iFeel은 시각장애인을 위한 AI 기반 복약 안전 솔루션입니다.">
-<link rel="stylesheet" href="tokens.css">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="tokens.css?v=2">
+<link rel="stylesheet" href="styles.css?v=2">
+<style>
+  /* Hard-enforce Korean word break — keep entire syllable blocks together. */
+  html, body, *, *::before, *::after {
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+    word-wrap: normal !important;
+  }
+</style>
 </head>
 <body>
 
@@ -45,11 +53,11 @@
       </div>
       <h1>눈이 아닌<br><em>기술</em>로 읽습니다.</h1>
       <p class="hero-sub">
-        시각장애인을 위한 AI 복약 식별·관리 솔루션. 약병에 손을 대면, iFeel이 약 이름과 복약법을 듣고 만질 수 있는 형태로 알려드립니다.
+        시각장애인을 위한 AI 복약 식별·관리 솔루션. 약병을 카메라로 촬영하면, iFeel이 약 이름과 복약법을 듣고 만질 수 있는 형태로 알려드립니다.
       </p>
       <div class="hero-actions">
         <a href="#cta" class="btn btn-primary">사전 등록하기</a>
-        <a href="#showcase" class="btn btn-ghost">앱 체험하기 →</a>
+        <a href="#showcase" class="btn btn-ghost">앱 기능 보기 →</a>
       </div>
       <div class="hero-trust">
         <div>
@@ -188,10 +196,10 @@
 <section id="showcase" class="section showcase">
   <div class="container">
     <div class="section-head reveal">
-      <div class="section-label">03 — 앱 체험</div>
-      <h2 class="section-title">직접 만져보는<br><em>앱 미리보기</em>.</h2>
+      <div class="section-label">03 — 앱 기능</div>
+      <h2 class="section-title">카메라가 곧<br><em>약사의 눈</em>이 됩니다.</h2>
       <p class="section-lede">
-        실제 앱의 핵심 인터랙션 세 가지를 그대로 옮겨 두었습니다. 각 시나리오를 클릭하거나 호버하며 iFeel이 어떻게 작동하는지 직접 확인해 보세요.
+        iFeel의 핵심은 단 하나, 카메라로 약병을 식별하는 일입니다. 시각장애인 사용자가 가장 어려워하는 ‘이 약이 무슨 약인지’를, 손에 닿는 즉시 음성으로 알려줍니다.
       </p>
     </div>
     <div id="showcase-root"></div>
@@ -210,7 +218,7 @@
       <div class="audience-card reveal">
         <div class="who">당사자</div>
         <h4>시각장애인 ·<br>저시력 사용자</h4>
-        <p>약병에 손만 대면 됩니다. 들리는 큰 글씨, 만져지는 알림, 그리고 한 번의 실수도 차단하는 안전망이 일상에 더해집니다.</p>
+        <p>카메라로 약병을 비추기만 하면 됩니다. 들리는 큰 글씨, 만져지는 알림, 그리고 한 번의 실수도 차단하는 안전망이 일상에 더해집니다.</p>
       </div>
       <div class="audience-card reveal">
         <div class="who">함께 돌보는 사람</div>

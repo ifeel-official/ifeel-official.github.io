@@ -37,9 +37,10 @@ function AIScanPreview() {
 
         <div
           className={`scan-stage state-${state}`}
-          onMouseEnter={runScan}
           onClick={runScan}
           role="button"
+          tabIndex={0}
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); runScan(); } }}
           aria-label="약병을 스캔하려면 탭하세요"
         >
           {/* Viewfinder corners */}
