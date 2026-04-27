@@ -1,0 +1,131 @@
+/* ==========================================================================
+   iFeel — Design Tokens
+   감각 중심 헬스케어. 시각장애인을 위한 복약 안전.
+   ========================================================================== */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+
+:root {
+  /* ---------- Color: Ink & Sky ---------- */
+  /* 신뢰감을 주는 밝은 블루 시스템. 의료 기관에서 오래 검증된 색역이면서도
+     차갑지 않게 약간 하늘빛을 섞었습니다. */
+
+  --ink-900: #0A1B33;      /* 주요 텍스트 — 잉크블루 */
+  --ink-800: #11243F;
+  --ink-700: #1F3555;      /* 본문 */
+  --ink-500: #536681;      /* 보조 */
+  --ink-300: #A8B5C8;      /* 구분선, 비활성 */
+
+  --paper-50: #F6F9FD;     /* 페이지 배경 — 푸른 기가 도는 오프화이트 */
+  --paper-100: #ECF2FA;
+  --paper-200: #DDE7F3;
+
+  --white: #FFFFFF;
+  --hairline: rgba(10, 27, 51, 0.08);
+
+  /* Blue — 단 하나의 액센트. 밝고 신뢰감 있는 톤. */
+  --blue-700: #1553B8;     /* AAA on paper */
+  --blue-600: #1E6BD6;     /* CTA 기본 */
+  --blue-500: #2F86F2;     /* 밝은 액센트 */
+  --blue-400: #62A5F7;
+  --blue-200: #BEDAFB;
+  --blue-100: #DCEAFD;
+  --blue-50:  #EEF5FE;
+
+  --ok-600:    #0F8A5F;
+  --warn-600:  #B56A10;
+  --danger-600:#C93030;
+
+  --night-900: #081629;
+  --night-800: #0E1F36;
+  --night-700: #182B47;
+  --night-600: #253955;
+  --night-text: #ECF2FA;
+
+  /* ---------- Typography ---------- */
+  --font-sans: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', sans-serif;
+  --font-display: 'Pretendard Variable', 'Pretendard', -apple-system, system-ui, sans-serif;
+
+  --fs-display-xl: clamp(56px, 7.5vw, 104px);
+  --fs-display-l:  clamp(44px, 5.5vw, 76px);
+  --fs-display-m:  clamp(32px, 3.8vw, 52px);
+  --fs-heading-l:  32px;
+  --fs-heading-m:  24px;
+  --fs-heading-s:  20px;
+  --fs-body-l:     20px;
+  --fs-body:       18px;
+  --fs-caption:    15px;
+  --fs-micro:      13px;
+
+  --lh-tight: 1.15;
+  --lh-snug:  1.3;
+  --lh-body:  1.7;
+
+  --tracking-tight: -0.03em;
+  --tracking-normal: -0.01em;
+  --tracking-wide: 0.04em;
+  --tracking-wider: 0.12em;
+
+  /* ---------- Shape & Space ---------- */
+  --r-sm: 8px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+  --r-pill: 999px;
+
+  --hit-min: 56px;
+  --hit-comfortable: 64px;
+  --hit-large: 80px;
+
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 128px;
+
+  --shadow-xs: 0 1px 2px rgba(10, 27, 51, 0.06);
+  --shadow-sm: 0 2px 8px rgba(10, 27, 51, 0.06), 0 1px 2px rgba(10, 27, 51, 0.04);
+  --shadow-md: 0 8px 24px rgba(10, 27, 51, 0.08), 0 2px 6px rgba(10, 27, 51, 0.04);
+  --shadow-lg: 0 24px 48px rgba(10, 27, 51, 0.12), 0 8px 16px rgba(10, 27, 51, 0.06);
+
+  --focus-ring: 0 0 0 3px var(--paper-50), 0 0 0 6px var(--blue-500);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur: 280ms;
+  --dur-slow: 520ms;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-normal);
+  color: var(--ink-900);
+  background: var(--paper-50);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  margin: 0;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--r-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

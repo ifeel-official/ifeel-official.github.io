@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 72" fill="none">
+  
+  <g>
+    
+    <circle cx="12" cy="20" r="5" fill="#0B1220"></circle>
+    <circle cx="12" cy="36" r="5" fill="#0B1220"></circle>
+    <circle cx="28" cy="20" r="5" fill="#0B1220"></circle>
+    <circle cx="28" cy="36" r="5" fill="#0B1220" fill-opacity="0.18"></circle>
+    <circle cx="12" cy="52" r="5" fill="#0B1220" fill-opacity="0.18"></circle>
+    <circle cx="28" cy="52" r="5" fill="#0B1220" fill-opacity="0.18"></circle>
+    
+    <circle cx="12" cy="20" r="8" stroke="#D97B1F" stroke-width="2" opacity="0.9"></circle>
+  </g>
+  
+  <text x="58" y="48" font-family="Instrument Serif, serif" font-size="44" font-style="italic" fill="#0B1220">i</text>
+  <text x="78" y="48" font-family="Instrument Serif, serif" font-size="44" fill="#0B1220">Feel</text>
+</svg>
