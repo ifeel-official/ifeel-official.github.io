@@ -162,36 +162,83 @@ function HeroVisual() {
   );
 }
 
-// ---------- Showcase: single feature (AI scan) ----------
+// ---------- Showcase: 3 core features ----------
 function Showcase() {
-  const copy = {
-    h: "약병을 카메라로 촬영하면, 이름을 들려드립니다.",
-    p: "스마트폰 카메라로 약병을 비추면 iFeel의 AI가 라벨의 텍스트·형태·바코드를 동시에 분석해 0.8초 안에 의약품을 식별합니다. 약 이름, 용량, 복약 시간, 금기사항을 즉시 음성으로 안내하며, 동시에 화면에는 고대비 큰 글씨로 표시됩니다.",
-    i: [
-      { k: "AI 식별", t: "2만 종 이상의 국내 의약품 데이터베이스와 대조해 정확도 99.2%로 약을 인식합니다." },
-      { k: "음성 안내", t: "식별 결과를 자연스러운 한국어 음성으로 자동 재생합니다. 스피커 버튼으로 다시 듣기도 가능합니다." },
-      { k: "복약 가이드", t: "처방된 용량·복용 시간·식전·식후·주의사항까지 한 번에 안내합니다." },
-    ],
-  };
+  const [tab, setTab] = useState("scan");
+
+  const tabs = [
+    { id: "scan",  num: "01", label: "약 스캔" },
+    { id: "alert", num: "02", label: "복용 일정 알림" },
+    { id: "dash",  num: "03", label: "통합 관리" },
+  ];
+
+  const content = {
+    scan: {
+      h: "약병을 카메라로 촬영하면, 이름을 들려드립니다.",
+      p: "스마트폰 카메라로 약병을 비추면 iFeel의 AI가 라벨의 텍스트·형태·바코드를 동시에 분석해 0.8초 안에 의약품을 식별합니다. 약 이름, 용량, 복약 시간, 금기사항을 즉시 음성으로 안내하며, 동시에 화면에는 고대비 큰 글씨로 표시됩니다.",
+      i: [
+        { k: "AI 식별",   t: "2만 종 이상의 국내 의약품 데이터베이스와 대조해 정확도 99.2%로 약을 인식합니다." },
+        { k: "음성 안내", t: "식별 결과를 자연스러운 한국어 음성으로 자동 재생합니다. 스피커 버튼으로 다시 듣기도 가능합니다." },
+        { k: "복약 가이드", t: "처방된 용량·복용 시간·식전·식후·주의사항까지 한 번에 안내합니다." },
+      ],
+    },
+    alert: {
+      h: "정확한 시간에, 정확한 약을 알려드립니다.",
+      p: "처방전 정보를 토대로 매일의 복용 일정을 자동으로 구성합니다. 약 먹을 시간이 되면 음성·진동·고대비 화면 알림이 동시에 울리고, 중복·과다·금기 복용이 감지되면 즉시 차단 경고를 보냅니다.",
+      i: [
+        { k: "정시 알림",   t: "약마다 복용 시간을 설정하면 매일 같은 시각에 음성과 진동으로 알림을 받습니다." },
+        { k: "오복용 차단", t: "이미 복용한 약, 1회 용량을 넘긴 복용, 함께 먹으면 안 되는 조합을 실시간으로 감지해 경고합니다." },
+        { k: "복용 기록",   t: "복용 완료를 한 번의 동작으로 기록하고, 놓친 약은 다음 가능 시간으로 자동 재안내합니다." },
+      ],
+    },
+    dash: {
+      h: "한 사람의 복약을, 모두가 함께 관리합니다.",
+      p: "보호자와 의료진이 사용자의 복약 상태를 자신의 앱에서 실시간으로 확인합니다. 복약 준수율, 차단된 오복용 건수, 시간대별 복용 기록까지 — 떨어져 있어도 옆에서 챙기는 것처럼 알 수 있고, 처방을 더 정확하게 조정할 수 있습니다.",
+      i: [
+        { k: "보호자 연동", t: "복약 준수율, 차단된 오복용, 놓친 알림 내역까지 보호자 앱에서 실시간으로 확인합니다." },
+        { k: "의료진 공유", t: "처방 의사·약사가 환자의 실제 복약 패턴을 데이터로 받아 처방을 더 정확하게 조정합니다." },
+        { k: "처방 자동 입력", t: "전자 처방전 QR을 한 번 스캔하면 복약 일정이 자동 등록되어 직접 입력할 필요가 없습니다." },
+      ],
+    },
+  }[tab];
+
+  const Active = { scan: AIScanPreview, alert: AlertPreview, dash: DashboardPreview }[tab];
 
   return (
-    <div className="showcase-stage">
-      <div className="showcase-copy">
-        <h3>{copy.h}</h3>
-        <p>{copy.p}</p>
-        <div className="showcase-instructions">
-          {copy.i.map((it,i) => (
-            <div className="instr" key={i}>
-              <span className="k">{it.k}</span>
-              <span className="t">{it.t}</span>
-            </div>
-          ))}
+    <>
+      <div className="showcase-tabs" role="tablist">
+        {tabs.map(t => (
+          <button
+            key={t.id}
+            role="tab"
+            aria-selected={tab === t.id}
+            className={`showcase-tab ${tab === t.id ? "active" : ""}`}
+            onClick={() => setTab(t.id)}
+          >
+            <span className="tnum">{t.num}</span>
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="showcase-stage">
+        <div className="showcase-copy">
+          <h3>{content.h}</h3>
+          <p>{content.p}</p>
+          <div className="showcase-instructions">
+            {content.i.map((it,i) => (
+              <div className="instr" key={i}>
+                <span className="k">{it.k}</span>
+                <span className="t">{it.t}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="showcase-preview">
+          <Active />
         </div>
       </div>
-      <div className="showcase-preview">
-        <AIScanPreview />
-      </div>
-    </div>
+    </>
   );
 }
 
