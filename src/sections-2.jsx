@@ -176,14 +176,17 @@ function FeaturesSection() {
         </div>
       ) : (
         <div style={{ maxWidth: 540, margin: '0 auto', padding: '0 22px 96px', display: 'flex', flexDirection: 'column', gap: 64 }}>
+          <Reveal style={{ display: 'flex', justifyContent: 'center' }}>
+            <img src={(typeof window !== 'undefined' && window.__resources && window.__resources.appIcon) || 'assets/app-icon.png'} alt="" aria-hidden="true" style={{ width: 76, height: 76, borderRadius: 18, boxShadow: '0 8px 24px rgba(0,0,0,0.10)' }} />
+          </Reveal>
           {items.map((it, i) => (
             <Reveal key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 26 }}>
-              <PhoneFrame w={256} screenDark={screens[i].dark} label={`${S.a11y.phoneShowcase} — ${screens[i].label}`}>{screens[i].el}</PhoneFrame>
               <div style={{ textAlign: 'center' }}>
                 <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 700, letterSpacing: 1.6, color: 'var(--primary)' }}>{it.tag}</span>
                 <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(22px, 6vw, 28px)', fontWeight: 800, letterSpacing: -0.8, lineHeight: 1.2, color: 'var(--text)', margin: '10px 0 0', textWrap: 'balance' }}>{it.title}</h3>
                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: 17, lineHeight: 1.6, color: 'var(--sub-text)', margin: '12px auto 0', maxWidth: 420, textWrap: 'pretty' }}>{it.body}</p>
               </div>
+              <PhoneFrame w={256} screenDark={screens[i].dark} label={`${S.a11y.phoneShowcase} — ${screens[i].label}`}>{screens[i].el}</PhoneFrame>
             </Reveal>
           ))}
         </div>
