@@ -150,7 +150,7 @@ const STRINGS = {
       eyebrow: 'YAKSOK · iFeel',
       headline: ['Identifying your medicine', 'is easy — even', 'if you can’t see it.'],
       sub: 'Yaksok is a barrier-free medication guide. Point your phone at a medicine package — it identifies the drug and reads the dosage and warnings aloud, in plain language anyone can understand.',
-      trust: 'Built on Korea’s MFDS public health data · For everyone, including blind and older adults',
+      trust: '',
       scroll: 'Scroll to explore',
     },
 
@@ -163,7 +163,7 @@ const STRINGS = {
         { n: '5+', l: 'For older adults taking several medicines at once, misuse is a serious risk' },
         { n: '40,000+', l: 'medicines Yaksok identifies and explains in plain language' },
       ],
-      closing: 'Yaksok identifies 40,000+ medicines and explains every one of them in plain language anyone can understand.',
+      closing: '',
     },
 
     features: {
