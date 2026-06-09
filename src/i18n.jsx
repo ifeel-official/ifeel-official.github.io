@@ -133,7 +133,7 @@ const STRINGS = {
   en: {
     htmlLang: 'en',
     metaTitle: 'Yaksok (약속) — Medicine identification & medication guide for everyone',
-    nav: { problem: 'Why Yaksok', features: 'What Yaksok does', accessibility: 'Built for everyone', download: 'Download' },
+    nav: { problem: 'Why', features: 'Usage', accessibility: 'Accessibility', download: 'Download' },
     a11y: {
       skip: 'Skip to main content',
       themeToLight: 'Switch to light theme',
