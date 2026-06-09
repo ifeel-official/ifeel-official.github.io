@@ -38,15 +38,16 @@ function Eyebrow({ children, style = {} }) {
 }
 
 function BrandMark({ height = 30, withWordmark = true }) {
-  const { theme } = useI18n();
+  const { theme, lang } = useI18n();
   const R = (typeof window !== 'undefined' && window.__resources) || {};
   const src = theme === 'dark'
     ? (R.logoDark || 'assets/logo_dark_transparent.png')
     : (R.logoLight || 'assets/logo_light_transparent.png');
+  const wordmark = lang === 'en' ? 'Yaksok' : '약속';
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 9 }}>
       <img src={src} alt="" aria-hidden="true" style={{ width: height, height, display: 'block' }} />
-      {withWordmark && <span style={{ fontFamily: 'var(--font-sans)', fontSize: height * 0.66, fontWeight: 800, letterSpacing: -0.6, color: 'var(--text)' }}>약속</span>}
+      {withWordmark && <span style={{ fontFamily: 'var(--font-sans)', fontSize: height * 0.66, fontWeight: 800, letterSpacing: -0.6, color: 'var(--text)' }}>{wordmark}</span>}
     </span>
   );
 }

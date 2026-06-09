@@ -3,6 +3,46 @@
 
 const { useState: useS2, useEffect: useE2, useRef: useR2 } = React;
 
+// ── TTS voice selection ────────────────────────────────────────────────
+// Browsers ship several voices per language; the default is often a low-quality
+// fallback that sounds raspy/hoarse (especially en-US). We explicitly pick the
+// best available natural voice so read-aloud sounds clear.
+function pickVoice(voices, lang) {
+  const want = lang === 'en' ? 'en' : 'ko';
+  const matches = voices.filter(v => (v.lang || '').toLowerCase().startsWith(want));
+  if (!matches.length) return null;
+  // Higher score = better. Prefer modern "natural/neural" engines and known-good
+  // named voices; demote eSpeak and other low-fidelity defaults.
+  const score = (v) => {
+    const n = (v.name || '').toLowerCase();
+    let s = 0;
+    if (/natural|neural|premium|enhanced/.test(n)) s += 60;
+    if (/google/.test(n)) s += 40;
+    if (/microsoft/.test(n)) s += 25;
+    if (/(samantha|ava|allison|aaron|jenny|aria|nova|siri|nicky|evan|joelle)/.test(n)) s += 30; // Apple/MS quality voices
+    if (/(yuna|sora|heami|injoon)/.test(n)) s += 30; // Apple/MS Korean quality voices
+    if (v.localService) s += 8;
+    if (/espeak|compact|pico|festival/.test(n)) s -= 50; // raspy/robotic engines
+    if ((v.lang || '').toLowerCase() === (want === 'en' ? 'en-us' : 'ko-kr')) s += 6;
+    return s;
+  };
+  return matches.slice().sort((a, b) => score(b) - score(a))[0];
+}
+
+// Voices load asynchronously; resolve once they're available.
+function getVoicesAsync() {
+  return new Promise((resolve) => {
+    const synth = window.speechSynthesis;
+    if (!synth) { resolve([]); return; }
+    let v = synth.getVoices();
+    if (v && v.length) { resolve(v); return; }
+    let done = false;
+    const finish = () => { if (done) return; done = true; resolve(synth.getVoices() || []); };
+    synth.addEventListener && synth.addEventListener('voiceschanged', finish, { once: true });
+    setTimeout(finish, 600); // fallback if the event never fires
+  });
+}
+
 function useMedia(q) {
   const [m, setM] = useS2(() => (typeof matchMedia !== 'undefined' ? matchMedia(q).matches : true));
   useE2(() => {
@@ -66,13 +106,17 @@ function DrugDemoScreen({ dark }) {
     const synth = window.speechSynthesis;
     if (synth && typeof SpeechSynthesisUtterance !== 'undefined') {
       synth.cancel();
-      sections.forEach((s, i) => {
-        const u = new SpeechSynthesisUtterance(`${s.label}. ${s.body}`);
-        u.lang = lang === 'en' ? 'en-US' : 'ko-KR';
-        u.rate = 1.2; u.pitch = 1;
-        u.onstart = () => setReading(i);
-        u.onend = () => { if (i === sections.length - 1) setReading(-1); };
-        synth.speak(u);
+      getVoicesAsync().then((voices) => {
+        const voice = pickVoice(voices, lang);
+        sections.forEach((s, i) => {
+          const u = new SpeechSynthesisUtterance(`${s.label}. ${s.body}`);
+          u.lang = lang === 'en' ? 'en-US' : 'ko-KR';
+          if (voice) u.voice = voice;
+          u.rate = 1.0; u.pitch = 1; u.volume = 1;
+          u.onstart = () => setReading(i);
+          u.onend = () => { if (i === sections.length - 1) setReading(-1); };
+          synth.speak(u);
+        });
       });
     } else {
       // no speech engine — advance the highlight on a timer so the cue still reads

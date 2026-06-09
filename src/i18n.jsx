@@ -5,7 +5,7 @@ const STRINGS = {
   ko: {
     htmlLang: 'ko',
     metaTitle: '약속 (Yaksok) — 모두를 위한 의약품 식별 · 복약 가이드',
-    nav: { problem: '왜 약속인가요', features: '약속이 하는 일', accessibility: '모두를 위한 설계', download: '다운로드' },
+    nav: { problem: '필요성', features: '사용법', accessibility: '접근성', download: '다운로드' },
     a11y: {
       skip: '본문으로 건너뛰기',
       themeToLight: '밝은 테마로 전환',
@@ -27,7 +27,7 @@ const STRINGS = {
     },
 
     problem: {
-      eyebrow: '왜 약속인가요',
+      eyebrow: '약은 안전해야 합니다',
       heading: ['앞이 보이지 않아도, 나이가 들어도,', '약은 안전해야 해요.'],
       intro: '4만개가 넘는 의약품 중 점자 표기 의약품은 35개 뿐이고,\n10종 이상 다제약물 복용 만성질환자가 171만명으로 늘었지만, 전문 용어가 가득한 의약품 설명서는 아무리 읽어봐도 함께 복약하면 안되는 약물조차 식별하기 어렵습니다.',
       stats: [
@@ -39,7 +39,7 @@ const STRINGS = {
     },
 
     features: {
-      eyebrow: '약속이 하는 일',
+      eyebrow: '비추면, 읽어드려요',
       heading: ['비추기만 하면,', '나머지는 약속이.'],
       sub: '카메라로 약을 비추는 단 한 번의 동작으로, 약속은 4만여 종의 의약품을 식별하고 누구나 이해할 수 있는 쉬운 말로 설명해 드려요.',
       items: [
@@ -97,7 +97,7 @@ const STRINGS = {
     },
 
     access: {
-      eyebrow: '모두를 위한 설계',
+      eyebrow: '누구도 빼놓지 않아요',
       heading: ['누구도 빼놓지 않는 것,', '그게 기본값이에요.'],
       intro: '약속의 접근성은 ‘나중에 더한 기능’이 아닙니다. 첫 화면부터 접근성을 중심에 두고 만들어졌습니다.',
       items: [

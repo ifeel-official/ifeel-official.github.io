@@ -88,7 +88,7 @@
   --text:       var(--gray-50);
   --sub-text:   var(--gray-300);
   --hint-text:  var(--gray-400);
-  --primary:    var(--blue);
+  --primary:    #3385FF;   /* dark-theme primary (lighter blue for contrast) */
   --on-primary: var(--gray-50);
   --divider:    rgba(248, 250, 252, 0.08);  /* gray50 @ 8% */
 
