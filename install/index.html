@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>약속 (Yaksok) 앱 설치</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/app-icon.png">
+<style>
+  :root { --bg:#F8FAFC; --text:#1A1A1A; --muted:#6B7280; --primary:#0066FF; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#131316; --text:#F5F5F7; --muted:#9CA3AF; }
+  }
+  html, body { margin:0; padding:0; }
+  body {
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,'Pretendard','Malgun Gothic',sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    min-height:100vh; text-align:center; padding:24px; box-sizing:border-box;
+  }
+  main { max-width:360px; }
+  img { width:72px; height:72px; border-radius:18px; margin-bottom:20px; }
+  h1 { font-size:20px; margin:0 0 8px; }
+  p { color:var(--muted); font-size:15px; margin:0 0 24px; }
+  a.btn {
+    display:inline-block; width:100%; box-sizing:border-box;
+    background:var(--primary); color:#fff; text-decoration:none;
+    font-weight:700; font-size:16px; padding:14px 20px; border-radius:12px;
+  }
+</style>
+</head>
+<body>
+  <main>
+    <img src="../assets/app-icon.png" alt="">
+    <h1>약속 앱으로 이동 중입니다</h1>
+    <p>자동으로 이동하지 않으면 아래 버튼을 눌러주세요.</p>
+    <a class="btn" id="fallback-link" href="/">홈페이지로 이동</a>
+  </main>
+
+  <script>
+    var APP_STORE_URL = 'https://apps.apple.com/kr/app/id6770225626';
+    var PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=kr.co.devstory.ifeel.app';
+    var HOME_URL = '/';
+
+    var ua = navigator.userAgent || '';
+    var isIOS = /iPhone|iPad|iPod/i.test(ua);
+    var isAndroid = /Android/i.test(ua);
+
+    var target = HOME_URL;
+    if (isIOS) target = APP_STORE_URL;
+    else if (isAndroid) target = PLAY_STORE_URL;
+
+    document.getElementById('fallback-link').href = target;
+
+    if (isIOS || isAndroid) {
+      location.replace(target);
+    }
+  </script>
+</body>
+</html>
