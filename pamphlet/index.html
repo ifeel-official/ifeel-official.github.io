@@ -275,6 +275,48 @@
         color: var(--text);
       }
 
+      .chapters {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .chapter-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        text-align: left;
+        font-family: inherit;
+        background: transparent;
+        border: 1px solid var(--card-border);
+        border-radius: var(--r-md);
+        padding: 10px 14px;
+        cursor: pointer;
+        color: var(--text);
+        transition:
+          background 0.12s ease,
+          border-color 0.12s ease;
+      }
+      .chapter-btn:hover {
+        border-color: var(--primary);
+      }
+      .chapter-time {
+        flex: none;
+        width: 38px;
+        font-variant-numeric: tabular-nums;
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-label);
+        color: var(--primary);
+      }
+      .chapter-label {
+        font-size: var(--fs-label);
+        font-weight: var(--fw-medium);
+      }
+
       .cta-row {
         display: flex;
         gap: 12px;
@@ -376,6 +418,48 @@
               <span id="totalTimeText">--:--</span>
             </div>
           </div>
+
+          <ul class="chapters" id="chapterList" aria-label="구간 목록">
+            <li>
+              <button
+                type="button"
+                class="chapter-btn"
+                data-time="20"
+                aria-label="20초, 해결하려는 문제로 이동"
+              >
+                <span class="chapter-time" aria-hidden="true">0:20</span>
+                <span class="chapter-label" aria-hidden="true"
+                  >해결하려는 문제</span
+                >
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="chapter-btn"
+                data-time="48"
+                aria-label="48초, 앱의 주요 기능 네 가지 소개로 이동"
+              >
+                <span class="chapter-time" aria-hidden="true">0:48</span>
+                <span class="chapter-label" aria-hidden="true"
+                  >앱의 주요 기능 네 가지 소개</span
+                >
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="chapter-btn"
+                data-time="93"
+                aria-label="1분 33초, 앱 다운로드 방법으로 이동"
+              >
+                <span class="chapter-time" aria-hidden="true">1:33</span>
+                <span class="chapter-label" aria-hidden="true"
+                  >앱 다운로드 방법</span
+                >
+              </button>
+            </li>
+          </ul>
         </div>
       </div>
 
@@ -524,6 +608,20 @@
         playBtn.addEventListener("click", function () {
           if (audio.paused) audio.play();
           else audio.pause();
+        });
+
+        var chapterBtns = Array.prototype.slice.call(
+          document.querySelectorAll(".chapter-btn"),
+        );
+        chapterBtns.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var time = Number(btn.dataset.time);
+            audio.currentTime = time;
+            seekBar.value = time;
+            updateSeekText();
+            updateVisual();
+            if (audio.paused) audio.play();
+          });
         });
 
         var installBtn = document.getElementById("installBtn");
