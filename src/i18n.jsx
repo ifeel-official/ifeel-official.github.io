@@ -42,19 +42,25 @@ const STRINGS = {
       eyebrow: '비추면, 읽어드려요',
       heading: ['비추기만 하면,', '나머지는 약속이.'],
       sub: '카메라로 약을 비추는 단 한 번의 동작으로, 약속은 4만여 종의 의약품을 식별하고 누구나 이해할 수 있는 쉬운 말로 설명해 드려요.',
+      modes: ['의약품 식별', '사용기한 확인', '사진 읽기'],
       items: [
         {
-          tag: '01 · VISION',
+          tag: '01 · 의약품 식별',
           title: '바코드를 비추면, 정확히 식별해요',
-          body: 'Vision AI가 의약품 포장의 바코드를 인식하고, 식품의약품안전처 의약품 허가정보와 대조해 어떤 약인지 정확하게 식별합니다.',
+          body: 'AI가 의약품 포장의 바코드를 인식하고, 식품의약품안전처 의약품 허가정보와 대조해 어떤 약인지 정확하게 식별합니다.',
         },
         {
-          tag: '02 · OCR · TTS',
-          title: '바코드가 없어도, 글자를 읽어드려요',
-          body: '바코드가 없는 약은 OCR로 포장지의 글자를 인식하고, TTS로 또박또박 소리 내어 읽어드립니다.',
+          tag: '02 · 사용기한 확인',
+          title: '사용기한도, 비추기만 하면 알려줄게요',
+          body: '포장지에 적힌 날짜를 찾아 헤맬 필요 없어요. 카메라로 비추기만 하면 AI가 사용기한을 정확히 인식해 음성으로 읽어드립니다.',
         },
         {
-          tag: '03 · AI 쉬운 설명',
+          tag: '03 · 사진 읽기',
+          title: '사진 한 장이면 어떤 모습인지 알 수 있어요.',
+          body: '눈앞의 풍경이나 사물을 사진으로 찍어보세요. AI가 사진 속 상황과 모습을 자세히 분석해 오디오로 친절하게 설명해 드립니다.',
+        },
+        {
+          tag: '04 · AI 쉬운 설명',
           title: '어려운 복약 안내를, 쉬운 말로',
           body: 'AI가 식약처 원문 안내를 어린아이도 이해할 수 있는 쉬운 말로 다시 써서 들려드려요. 4만여 종의 모든 의약품을, 빠짐없이요.',
         },
@@ -170,19 +176,25 @@ const STRINGS = {
       eyebrow: 'What Yaksok does',
       heading: ['Just point.', 'Yaksok does the rest.'],
       sub: 'From a single gesture — pointing your camera at a medicine — Yaksok carries you all the way from identification to a plain-language explanation.',
+      modes: ['Identify', 'Check expiry', 'Read a photo'],
       items: [
         {
-          tag: '01 · VISION',
+          tag: '01 · IDENTIFY',
           title: 'Point at the barcode — get an exact match',
-          body: 'Vision AI reads the barcode on the package and matches it against the MFDS drug-approval database to identify exactly what you’re holding.',
+          body: 'AI reads the barcode on the package and matches it against the MFDS drug-approval database to identify exactly what you’re holding.',
         },
         {
-          tag: '02 · OCR · TTS',
-          title: 'No barcode? It reads the text aloud',
-          body: 'For medicines without a barcode, OCR captures the text printed on the package and reads it aloud — clearly — with text-to-speech.',
+          tag: '02 · CHECK EXPIRY',
+          title: 'Point at the date — Yaksok reads it for you',
+          body: 'No more hunting for the printed date. Just point your camera at it — AI recognizes the expiry date precisely and reads it aloud.',
         },
         {
-          tag: '03 · AI EASY MODE',
+          tag: '03 · READ A PHOTO',
+          title: 'One photo tells you what’s in front of you.',
+          body: 'Take a photo of the scene or object in front of you. AI analyzes what’s in the picture in detail and describes it to you, out loud.',
+        },
+        {
+          tag: '04 · AI EASY MODE',
           title: 'Hard instructions, in words anyone gets',
           body: 'AI rewrites the official instructions into plain language a child could follow — for all 40,000+ medicines, without exception.',
         },

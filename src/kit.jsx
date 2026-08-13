@@ -1,6 +1,6 @@
 // kit.jsx — Yaksok primitives, phone frame, and app-screen previews (theme-aware, bilingual)
 // Exports to window: MIcon, Wave, ScanCorners, FabCircle, SegPill, PhoneFrame,
-//   HeroAppScreen, ScannerScreen, OcrScreen, DrugAiScreen, AccessScreen, scrColors, SCR
+//   HeroAppScreen, ScannerScreen, OcrScreen, ExpiryScreen, DrugAiScreen, AccessScreen, scrColors, SCR
 
 // screen-local color tokens (mirror the Yaksok semantic tokens, light/dark)
 function scrColors(dark) {
@@ -18,19 +18,23 @@ const SCR = {
     intro: '약속.', tagline: '보이지 않아도\n의약품 식별 어렵지 않아요.', yaksok: 'YAKSOK', next: '다음',
     point: '바코드를 비춰주세요', tapHint: '화면을 탭하면 스캔을 시작해요', identified: '의약품 식별됨',
     drugName: '타이레놀정500mg', cat: '해열 · 진통 · 소염제', maker: '한국존슨앤드존슨 · 정제',
-    ocrReading: '읽어드리고 있어요', ocrSub: '1일 3회 · 식후 30분',
     modeRaw: '원문', modeEasy: 'AI', aiLabel: '쉬운 설명',
     aiBody: '이 약은 아프거나 열이 날 때 먹는 약이에요. 한 번에 한 알, 하루 세 번까지 드실 수 있어요.',
     voiceover: '타이레놀정500mg, 제목', voTag: 'VoiceOver',
+    expiryLabel: '사용기한 식별됨', expiryDate: '2027년 3월 15일까지',
+    sceneLabel: '사진 읽기', sceneTitle: '사진을 촬영해 주세요.',
+    ocrLine1: '카페 테이블 위에 따뜻한 아메리카노 한 잔과', ocrLine2: '딸기가 올려진 생크림 케이크가 놓여 있습니다.', ocrLine3: '오른쪽에 포크가 하나 있어요.',
   },
   en: {
     intro: 'Yaksok.', tagline: 'Identifying medicine\nis easy, even unseen.', yaksok: 'YAKSOK', next: 'Next',
     point: 'Point at the barcode', tapHint: 'Tap the screen to start scanning', identified: 'IDENTIFIED',
     drugName: 'Tylenol 500mg', cat: 'Fever · pain · anti-inflammatory', maker: 'Janssen Korea · Tablet',
-    ocrReading: 'Reading aloud', ocrSub: '3× a day · 30 min after meals',
     modeRaw: 'Official', modeEasy: 'AI', aiLabel: 'In simple words',
     aiBody: 'This is medicine for when you hurt or have a fever. Take one tablet at a time, up to three times a day.',
     voiceover: 'Tylenol 500mg, heading', voTag: 'VoiceOver',
+    expiryLabel: 'EXPIRY IDENTIFIED', expiryDate: 'Until Mar 15, 2027',
+    sceneLabel: 'READ A PHOTO', sceneTitle: 'Take a photo to get started.',
+    ocrLine1: 'A warm cup of americano and a', ocrLine2: 'strawberry shortcake sit on the café table.', ocrLine3: 'There’s a fork on the right.',
   },
 };
 function useScr() { const { lang } = useI18n(); return SCR[lang] || SCR.ko; }
@@ -113,27 +117,33 @@ function FabCircle({ active, dark, diameter = 52, children }) {
 }
 
 // segmented control with sliding pill (static visual + optional onChange)
-function SegPill({ labels, index, onChange, dark, height = 46, fs = 14 }) {
+// `full` stretches to equal-width segments filling the container, mirroring
+// the app's GlassSegmentedControl(equalWidthSegments: true) scan-mode bar.
+function SegPill({ labels, index, onChange, dark, height = 46, fs = 14, full = false, bg, border, shadow, indicatorColor, selectedColor }) {
   const c = scrColors(dark);
   return (
     <div role={onChange ? 'tablist' : undefined} style={{
-      display: 'inline-flex', padding: 4, borderRadius: 999, position: 'relative',
-      background: c.glassFill, border: `1px solid ${c.glassBorder}`, boxShadow: c.glassShadow, height, boxSizing: 'border-box',
+      display: full ? 'flex' : 'inline-flex', width: full ? '100%' : undefined, padding: 4, borderRadius: 999, position: 'relative',
+      background: bg || c.glassFill, border: `1px solid ${border || c.glassBorder}`, boxShadow: shadow !== undefined ? shadow : c.glassShadow, height, boxSizing: 'border-box',
     }}>
       <div aria-hidden="true" style={{
         position: 'absolute', top: 4, bottom: 4, left: 4, width: `calc((100% - 8px) / ${labels.length})`,
-        transform: `translateX(${index * 100}%)`, background: c.text, borderRadius: 46,
+        transform: `translateX(${index * 100}%)`, background: indicatorColor || c.text, borderRadius: 46,
         transition: 'transform .222s cubic-bezier(.76,0,.24,1)',
       }} />
       {labels.map((l, i) => {
         const inner = (
           <span style={{ position: 'relative', zIndex: 1, fontFamily: 'var(--font-sans)', fontSize: fs,
-            fontWeight: i === index ? 700 : 600, color: i === index ? c.surface : c.text, padding: '0 16px', whiteSpace: 'nowrap' }}>{l}</span>
+            fontWeight: i === index ? 700 : 600, color: i === index ? (selectedColor || c.surface) : c.text, padding: full ? '0 4px' : '0 16px',
+            whiteSpace: 'nowrap', overflow: full ? 'hidden' : 'visible', textOverflow: full ? 'ellipsis' : 'clip' }}>{l}</span>
         );
+        const wrapStyle = full
+          ? { display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, minWidth: 0 }
+          : { display: 'flex', alignItems: 'center' };
         return onChange ? (
           <button key={l} role="tab" aria-selected={i === index} onClick={() => onChange(i)}
-            style={{ border: 0, background: 'transparent', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}>{inner}</button>
-        ) : <div key={l} style={{ display: 'flex', alignItems: 'center' }}>{inner}</div>;
+            style={{ border: 0, background: 'transparent', cursor: 'pointer', padding: 0, ...wrapStyle }}>{inner}</button>
+        ) : <div key={l} style={wrapStyle}>{inner}</div>;
       })}
     </div>
   );
@@ -201,28 +211,28 @@ function HeroAppScreen({ dark }) {
   );
 }
 
-// Faithful camera scanner. `reading` shows the OCR/TTS read-aloud state
-// (blue voice button + "읽어드리고 있어요" banner); otherwise the identified state.
-function ScannerScreen({ reading = false }) {
+// Full-width scan-mode bar pinned to the camera view's bottom edge — mirrors
+// the app's ScanModeSwitcher (GlassSegmentedControl, equalWidthSegments,
+// opaque dark bar) that switches between 의약품 식별 / 사용기한 확인 / 사진 읽기.
+function ScanModeBar({ modes, modeIndex, onModeChange }) {
+  if (!modes) return null;
+  return (
+    <div style={{ position: 'absolute', left: 16, right: 16, bottom: 30 }}>
+      <SegPill labels={modes} index={modeIndex} onChange={onModeChange} dark full height={44} fs={12.5}
+        bg={CAMERA} border="rgba(255,255,255,0.06)" indicatorColor="#0066FF" selectedColor="#fff" />
+    </div>
+  );
+}
+
+// Faithful camera scanner — barcode focused, package identified.
+function ScannerScreen({ modes, modeIndex = 0, onModeChange }) {
   const s = useScr();
   return (
     <div style={{ height: '100%', position: 'relative', background: 'radial-gradient(120% 80% at 50% 34%, #4a4a4a 0%, #2b2b2b 55%, #161616 100%)', overflow: 'hidden' }}>
-      {/* simulated package — centered inside the focus frame; barcode for identify, printed text for OCR */}
+      {/* simulated package — centered inside the focus frame */}
       <div style={{ position: 'absolute', top: 56, left: 0, right: 0, bottom: 196, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ position: 'relative', width: 182, height: 120, transform: 'rotate(-5deg)', borderRadius: 10, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 18px 40px rgba(0,0,0,0.4)', overflow: 'hidden' }}>
-        {reading ? (
-          <div style={{ position: 'absolute', inset: 0, padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <div style={{ width: '74%', height: 11, borderRadius: 3, background: 'rgba(255,255,255,0.82)' }} />
-            <div style={{ width: '46%', height: 7, borderRadius: 3, background: 'rgba(255,255,255,0.5)' }} />
-            <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <div style={{ width: '92%', height: 6, borderRadius: 3, background: 'rgba(255,255,255,0.34)' }} />
-              <div style={{ width: '84%', height: 6, borderRadius: 3, background: 'rgba(255,255,255,0.34)' }} />
-              <div style={{ width: '60%', height: 6, borderRadius: 3, background: 'rgba(255,255,255,0.34)' }} />
-            </div>
-          </div>
-        ) : (
           <div style={{ position: 'absolute', bottom: 12, left: 14, right: 14, height: 15, background: 'repeating-linear-gradient(90deg,rgba(255,255,255,0.55) 0 2px,transparent 2px 4px)' }} />
-        )}
         </div>
       </div>
       {/* focus brackets */}
@@ -230,32 +240,98 @@ function ScannerScreen({ reading = false }) {
         <ScanCorners size={204} />
       </div>
       {/* result banner */}
-      <div style={{ position: 'absolute', left: 16, right: 16, bottom: 148 }}>
+      <div style={{ position: 'absolute', left: 16, right: 16, bottom: 88 }}>
         <div style={{ background: CAMERA, border: '1px solid rgba(255,255,255,0.06)', borderRadius: 24, padding: '18px 20px', display: 'flex', alignItems: 'center', gap: 12 }}>
           <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1.6, color: 'rgba(255,255,255,0.8)', fontFamily: 'var(--font-sans)' }}>{reading ? s.ocrReading : s.identified}</span>
+            <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1.6, color: 'rgba(255,255,255,0.8)', fontFamily: 'var(--font-sans)' }}>{s.identified}</span>
             <span style={{ fontSize: 22, fontWeight: 700, letterSpacing: -0.44, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'var(--font-sans)' }}>{s.drugName}</span>
           </div>
-          {!reading && (
-            <div style={{ width: 44, height: 44, borderRadius: 999, flex: '0 0 44px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0066FF' }}>
-              <MIcon name="arrow_forward" size={24} color="#fff" />
-            </div>
-          )}
+          <div style={{ width: 44, height: 44, borderRadius: 999, flex: '0 0 44px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0066FF' }}>
+            <MIcon name="arrow_forward" size={24} color="#fff" />
+          </div>
         </div>
       </div>
-      {/* big voice / OCR button — dark glass; bars turn primary while reading */}
-      <div style={{ position: 'absolute', bottom: 44, left: 0, right: 0, display: 'flex', justifyContent: 'center' }}>
-        <div style={{ width: 84, height: 84, borderRadius: 999, background: CAMERA, border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          {reading ? <AnimWave size={38} color="#0066FF" /> : <MIcon name="graphic_eq" size={38} color="#fff" />}
-        </div>
-      </div>
+      <ScanModeBar modes={modes} modeIndex={modeIndex} onModeChange={onModeChange} />
     </div>
   );
 }
 
-// OCR · TTS = the camera read-aloud state of the scanner
-function OcrScreen() {
-  return <ScannerScreen reading />;
+// "사진 읽기" — AI describes the scene in a photo (not a document read-out).
+// Mirrors the app's in-camera OCR result: a dark panel replaces the focus
+// frame, streaming the description with the read-aloud sentence highlighted,
+// a close button top-right and a voice badge bottom-right
+// (scanner_ready_view.dart's _OcrDebugOverlay), plus the same result banner
+// shell used by the other modes just above the scan-mode bar.
+function OcrScreen({ modes, modeIndex = 2, onModeChange }) {
+  const s = useScr();
+  return (
+    <div style={{ height: '100%', position: 'relative', background: 'radial-gradient(120% 80% at 50% 34%, #4a4a4a 0%, #2b2b2b 55%, #161616 100%)', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', top: 56, left: 0, right: 0, bottom: 196, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ position: 'relative', width: 260, height: 240, borderRadius: 22, background: 'rgba(26,26,26,0.7)', padding: '26px 22px', boxSizing: 'border-box' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 600, lineHeight: 1.5, color: 'rgba(255,255,255,0.55)' }}>{s.ocrLine1}</span>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 700, lineHeight: 1.5, color: '#FFD700' }}>{s.ocrLine2}</span>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 600, lineHeight: 1.5, color: 'rgba(255,255,255,0.55)' }}>{s.ocrLine3}</span>
+          </div>
+          {/* close */}
+          <div style={{ position: 'absolute', top: -10, right: -10, width: 28, height: 28, borderRadius: 999, background: 'rgba(26,26,26,0.94)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 4px 12px rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <MIcon name="close" size={15} color="#fff" />
+          </div>
+          {/* voice badge — replays the reading */}
+          <div style={{ position: 'absolute', bottom: -12, right: -12, width: 36, height: 36, borderRadius: 999, background: '#0066FF', border: '1px solid rgba(255,255,255,0.4)', boxShadow: '0 4px 12px rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <AnimWave size={15} color="#fff" />
+          </div>
+        </div>
+      </div>
+      {/* result banner — same shell as the other modes */}
+      <div style={{ position: 'absolute', left: 16, right: 16, bottom: 88 }}>
+        <div style={{ background: CAMERA, border: '1px solid rgba(255,255,255,0.06)', borderRadius: 24, padding: '18px 20px', display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 4 }}>
+            <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1.6, color: 'rgba(255,255,255,0.8)', fontFamily: 'var(--font-sans)' }}>{s.sceneLabel}</span>
+            <span style={{ fontSize: 17, fontWeight: 700, letterSpacing: -0.2, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'var(--font-sans)' }}>{s.sceneTitle}</span>
+          </div>
+          <div style={{ width: 44, height: 44, borderRadius: 999, flex: '0 0 44px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0066FF' }}>
+            <MIcon name="photo_camera" size={22} color="#fff" />
+          </div>
+        </div>
+      </div>
+      <ScanModeBar modes={modes} modeIndex={modeIndex} onModeChange={onModeChange} />
+    </div>
+  );
+}
+
+// "사용기한 확인" — narrow focus frame around the printed expiry line; the
+// result banner surfaces the recognized date with a validity check instead
+// of a drug name.
+function ExpiryScreen({ modes, modeIndex = 1, onModeChange }) {
+  const s = useScr();
+  return (
+    <div style={{ height: '100%', position: 'relative', background: 'radial-gradient(120% 80% at 50% 34%, #4a4a4a 0%, #2b2b2b 55%, #161616 100%)', overflow: 'hidden' }}>
+      {/* simulated package edge with the printed expiry line */}
+      <div style={{ position: 'absolute', top: 56, left: 0, right: 0, bottom: 196, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ position: 'relative', width: 214, height: 74, transform: 'rotate(-3deg)', borderRadius: 8, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 18px 40px rgba(0,0,0,0.4)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <span style={{ fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 700, letterSpacing: 1.4, color: 'rgba(255,255,255,0.85)' }}>EXP 2027.03.15</span>
+        </div>
+      </div>
+      {/* focus brackets — same size as the identify/OCR focus frame */}
+      <div style={{ position: 'absolute', top: 56, left: 0, right: 0, bottom: 196, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <ScanCorners size={204} />
+      </div>
+      {/* result banner — same shell as the identify/OCR banners: label + recognized date, no valid/expired badge (the app only speaks that via TTS) */}
+      <div style={{ position: 'absolute', left: 16, right: 16, bottom: 88 }}>
+        <div style={{ background: CAMERA, border: '1px solid rgba(255,255,255,0.06)', borderRadius: 24, padding: '18px 20px', display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 4 }}>
+            <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1.6, color: 'rgba(255,255,255,0.8)', fontFamily: 'var(--font-sans)' }}>{s.expiryLabel}</span>
+            <span style={{ fontSize: 17, fontWeight: 700, letterSpacing: -0.2, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'var(--font-sans)' }}>{s.expiryDate}</span>
+          </div>
+          <div style={{ width: 44, height: 44, borderRadius: 999, flex: '0 0 44px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0066FF' }}>
+            <MIcon name="photo_camera" size={22} color="#fff" />
+          </div>
+        </div>
+      </div>
+      <ScanModeBar modes={modes} modeIndex={modeIndex} onModeChange={onModeChange} />
+    </div>
+  );
 }
 
 function DrugAiScreen({ dark }) {
@@ -329,5 +405,5 @@ function AccessScreen({ dark }) {
 
 Object.assign(window, {
   MIcon, Wave, AnimWave, ScanCorners, FabCircle, SegPill, Dots, PhoneFrame, scrColors, SCR, useScr,
-  HeroAppScreen, ScannerScreen, OcrScreen, DrugAiScreen, AccessScreen, CAMERA,
+  HeroAppScreen, ScannerScreen, OcrScreen, ExpiryScreen, DrugAiScreen, AccessScreen, CAMERA,
 });

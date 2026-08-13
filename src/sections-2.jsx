@@ -67,11 +67,12 @@ function SectionHead({ eyebrow, heading, sub, center }) {
 }
 
 // ── Features: scroll-driven phone showcase ──
-function featureScreens(theme) {
+function featureScreens(theme, modes, onModeChange) {
   const td = theme === 'dark';
   return [
-    { dark: true, label: '바코드 식별 화면', el: <ScannerScreen /> },
-    { dark: true, label: 'OCR 글자 읽기 화면', el: <OcrScreen /> },
+    { dark: true, label: '의약품 식별 화면', el: <ScannerScreen modes={modes} modeIndex={0} onModeChange={onModeChange} /> },
+    { dark: true, label: '사용기한 확인 화면', el: <ExpiryScreen modes={modes} modeIndex={1} onModeChange={onModeChange} /> },
+    { dark: true, label: '사진 읽기 화면', el: <OcrScreen modes={modes} modeIndex={2} onModeChange={onModeChange} /> },
     { dark: td, label: 'AI 쉬운 설명 화면', el: <DrugDemoScreen dark={td} /> },
   ];
 }
@@ -161,7 +162,6 @@ function FeaturesSection() {
   const wide = useMedia('(min-width: 920px)');
   const [active, setActive] = useS2(0);
   const items = S.features.items;
-  const screens = featureScreens(theme);
   const blockRefs = useR2([]);
 
   useE2(() => {
@@ -183,6 +183,13 @@ function FeaturesSection() {
     window.addEventListener('resize', onScroll);
     return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); };
   }, [wide, items.length]);
+
+  const jumpTo = (i) => {
+    setActive(i);
+    const el = blockRefs.current[i];
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+  const screens = featureScreens(theme, S.features.modes, jumpTo);
 
   return (
     <section id="features" aria-labelledby="feat-h" style={{ position: 'relative' }}>
@@ -270,12 +277,12 @@ function InteractiveDrugScreen({ dark, mode, setMode, reading, onRead }) {
         </div>
       </div>
       <div style={{ position: 'relative', padding: '10px 18px 20px', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <SegPill labels={DEMO_LABELS} index={mode} onChange={(i) => setMode(i)} dark={dark} height={44} fs={14} />
+        <div style={{ flex: 1 }} />
         <button type="button" onClick={onRead} aria-pressed={reading >= 0} aria-label={reading >= 0 ? d.stop : d.read}
           style={{ width: 50, height: 50, borderRadius: 999, border: `1px solid ${reading >= 0 ? 'transparent' : c.glassBorder}`, background: reading >= 0 ? c.primary : c.glassFill, boxShadow: c.glassShadow, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
           {reading >= 0 ? <AnimWave size={22} color="#fff" /> : <MIcon name="graphic_eq" size={24} color={c.text} />}
         </button>
-        <div style={{ flex: 1 }} />
-        <SegPill labels={DEMO_LABELS} index={mode} onChange={(i) => setMode(i)} dark={dark} height={44} fs={14} />
       </div>
     </div>
   );
