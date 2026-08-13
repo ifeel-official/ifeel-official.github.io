@@ -21,19 +21,19 @@ const STRINGS = {
     hero: {
       eyebrow: 'YAKSOK · iFeel',
       headline: ['보이지 않아도,', '의약품 식별', '어렵지 않아요.'],
-      sub: '약속은 스마트폰 카메라로 의약품을 식별하고, 복약 정보를 누구나 이해할 수 있는 쉬운 말로 읽어드리는 배리어프리 복약 가이드 앱입니다.',
+      sub: "'약속'은 시각장애인과 정보 취약계층의 안전한 약 식별 및 복용을 돕는 배리어프리 복약 가이드 앱입니다.",
       trust: '',
       scroll: '스크롤해서 살펴보기',
     },
 
     problem: {
       eyebrow: '약은 안전해야 합니다',
-      heading: ['앞이 보이지 않아도, 나이가 들어도,', '약은 안전해야 해요.'],
+      heading: ['시각장애인에게도, 고령층에게도,', '약은 안전해야 해요.'],
       intro: '4만개가 넘는 의약품 중 점자 표기 의약품은 35개 뿐이고,\n10종 이상 다제약물 복용 만성질환자가 171만명으로 늘었지만, 전문 용어가 가득한 의약품 설명서는 아무리 읽어봐도 함께 복약하면 안되는 약물조차 식별하기 어렵습니다.',
       stats: [
         { n: '40%', l: '의약품 정보 접근성 문제로 약 복용을 놓친 경험 시각장애인 비율' },
         { n: '52%', l: '2020년 대비 10종 이상의 약을 먹는 만성질환자 규모 증가율' },
-        { n: '3만 5천', l: "식약처의 의약품 쉬운 설명 서비스 'e약은요' 에서 정보 미제공 의약품 개수" },
+        { n: '40%', l: '약품 식별 어려움으로 복용 불이행 및 치료 효과 저하를 경험한 비율' },
       ],
       closing: '',
     },
@@ -80,7 +80,7 @@ const STRINGS = {
       read: '읽어주기',
       stop: '멈추기',
       reading: '읽어드리고 있어요',
-      drug: { cat: '해열 · 진통 · 소염제', name: '타이레놀정500mg', maker: '한국존슨앤드존슨 · 정제' },
+      drug: { cat: '해열 · 진통 · 소염제', name: '타이레놀정500mg' },
       sections: {
         '원문': [
           { label: '약의 효과', body: '해열·진통제로, 두통·치통·근육통·생리통 및 발열의 완화에 사용합니다.' },
@@ -154,20 +154,20 @@ const STRINGS = {
 
     hero: {
       eyebrow: 'YAKSOK · iFeel',
-      headline: ['Identifying your medicine', 'is easy — even', 'if you can’t see it.'],
-      sub: 'Yaksok is a barrier-free medication guide. Point your phone at a medicine package — it identifies the drug and reads the dosage and warnings aloud, in plain language anyone can understand.',
+      headline: ['Identifying your medicine', 'is easy — even', 'without sight.'],
+      sub: "'Yaksok' is a barrier-free medication guide app that helps blind and information-vulnerable people safely identify and take their medicine.",
       trust: '',
       scroll: 'Scroll to explore',
     },
 
     problem: {
       eyebrow: 'Why Yaksok',
-      heading: ['Even if you can’t see it,', 'even as you age — medicine should be safe.'],
+      heading: ['For the blind, for older adults —', 'medicine should be safe.'],
       intro: 'Tiny print and look-alike pills are made for people who can see and manage them on their own. Yaksok is built for blind and older adults: point your phone at a medicine, and it identifies the drug and reads the dosage and warnings aloud, in plain language.',
       stats: [
         { n: '40%', l: 'of blind people have missed taking their medicine' },
-        { n: '5+', l: 'For older adults taking several medicines at once, misuse is a serious risk' },
-        { n: '40,000+', l: 'medicines Yaksok identifies and explains in plain language' },
+        { n: '52%', l: 'increase since 2020 in chronic patients taking 10+ medicines at once' },
+        { n: '40%', l: 'experienced missed doses or reduced treatment effect due to difficulty identifying medicine' },
       ],
       closing: '',
     },
@@ -209,12 +209,12 @@ const STRINGS = {
       eyebrow: 'Try it',
       heading: ['One medicine,', 'three ways to read it.'],
       sub: 'Yaksok lets you switch between the official text, the “e-yak-eun-yo” summary, and the AI plain-language version — all on one screen. Switch below, and try read-aloud.',
-      modes: ['Official', 'e-yak-eun-yo', 'AI Easy'],
+      modes: ['Origin', 'e-yak-eun-yo', 'AI Easy'],
       modeHint: 'Choose how it’s explained',
       read: 'Read aloud',
       stop: 'Stop',
       reading: 'Reading aloud',
-      drug: { cat: 'Fever · pain · anti-inflammatory', name: 'Tylenol 500mg Tablet', maker: 'Janssen Korea · Tablet' },
+      drug: { cat: 'Fever · pain · anti-inflammatory', name: 'Tylenol 500mg Tablet' },
       sections: {
         '원문': [
           { label: 'What it does', body: 'A fever reducer and pain reliever, used to ease headache, toothache, muscle pain, menstrual pain, and fever.' },

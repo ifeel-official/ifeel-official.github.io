@@ -83,7 +83,6 @@ function featureScreens(theme, modes, onModeChange) {
 // Two modes — AI plain-language (default) and the official text — with REAL
 // text-to-speech read-aloud (Web Speech API), mirroring the app's TTS flow.
 const DEMO_KEYS = ['AI 쉬운 설명', '원문'];
-const DEMO_LABELS = ['AI', '원문'];
 
 function DrugDemoScreen({ dark }) {
   const { S, lang } = useI18n();
@@ -260,7 +259,6 @@ function InteractiveDrugScreen({ dark, mode, setMode, reading, onRead }) {
         </div>
         <span style={{ fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 700, letterSpacing: 1, color: c.hint }}>{d.drug.cat}</span>
         <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 26, fontWeight: 800, letterSpacing: -0.9, color: c.text, margin: '5px 0 2px', lineHeight: 1.15 }}>{d.drug.name}</h3>
-        <span style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: c.sub }}>{d.drug.maker}</span>
         <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', gap: 18 }}>
           {sections.map((s, n) => {
             const act = reading === n;
@@ -277,7 +275,7 @@ function InteractiveDrugScreen({ dark, mode, setMode, reading, onRead }) {
         </div>
       </div>
       <div style={{ position: 'relative', padding: '10px 18px 20px', display: 'flex', alignItems: 'center', gap: 10 }}>
-        <SegPill labels={DEMO_LABELS} index={mode} onChange={(i) => setMode(i)} dark={dark} height={44} fs={14} />
+        <SegPill labels={['AI', d.modes[0]]} index={mode} onChange={(i) => setMode(i)} dark={dark} height={44} fs={14} />
         <div style={{ flex: 1 }} />
         <button type="button" onClick={onRead} aria-pressed={reading >= 0} aria-label={reading >= 0 ? d.stop : d.read}
           style={{ width: 50, height: 50, borderRadius: 999, border: `1px solid ${reading >= 0 ? 'transparent' : c.glassBorder}`, background: reading >= 0 ? c.primary : c.glassFill, boxShadow: c.glassShadow, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>

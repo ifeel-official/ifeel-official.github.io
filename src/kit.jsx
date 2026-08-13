@@ -27,11 +27,11 @@ const SCR = {
   en: {
     identified: 'IDENTIFIED',
     drugName: 'Tylenol 500mg', cat: 'Fever · pain · anti-inflammatory', maker: 'Janssen Korea · Tablet',
-    modeRaw: 'Official', modeEasy: 'AI', aiLabel: 'In simple words',
+    modeRaw: 'Origin', modeEasy: 'AI', aiLabel: 'In simple words',
     aiBody: 'This is medicine for when you hurt or have a fever. Take one tablet at a time, up to three times a day.',
     voiceover: 'Tylenol 500mg, heading', voTag: 'VoiceOver',
     expiryLabel: 'EXPIRY IDENTIFIED', expiryDate: 'Until Mar 15, 2027',
-    sceneLabel: 'READ A PHOTO', sceneTitle: 'Take a photo to get started.',
+    sceneLabel: 'READ A PHOTO', sceneTitle: 'Take a photo.',
     ocrLine1: 'A warm cup of americano and a', ocrLine2: 'strawberry shortcake sit on the café table.', ocrLine3: 'There’s a fork on the right.',
   },
 };
@@ -124,11 +124,11 @@ function SegPill({ labels, index, onChange, dark, height = 46, fs = 14, full = f
       display: full ? 'flex' : 'inline-flex', width: full ? '100%' : undefined, padding: 4, borderRadius: 999, position: 'relative',
       background: bg || c.glassFill, border: `1px solid ${border || c.glassBorder}`, boxShadow: shadow !== undefined ? shadow : c.glassShadow, height, boxSizing: 'border-box',
     }}>
-      <div aria-hidden="true" style={{
+      {full && <div aria-hidden="true" style={{
         position: 'absolute', top: 4, bottom: 4, left: 4, width: `calc((100% - 8px) / ${labels.length})`,
         transform: `translateX(${index * 100}%)`, background: indicatorColor || c.text, borderRadius: 46,
         transition: 'transform .222s cubic-bezier(.76,0,.24,1)',
-      }} />
+      }} />}
       {labels.map((l, i) => {
         const inner = (
           <span style={{ position: 'relative', zIndex: 1, fontFamily: 'var(--font-sans)', fontSize: fs,
@@ -137,7 +137,7 @@ function SegPill({ labels, index, onChange, dark, height = 46, fs = 14, full = f
         );
         const wrapStyle = full
           ? { display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, minWidth: 0 }
-          : { display: 'flex', alignItems: 'center' };
+          : { display: 'flex', alignItems: 'center', borderRadius: 46, background: i === index ? (indicatorColor || c.text) : 'transparent' };
         return onChange ? (
           <button key={l} role="tab" aria-selected={i === index} onClick={() => onChange(i)}
             style={{ border: 0, background: 'transparent', cursor: 'pointer', padding: 0, ...wrapStyle }}>{inner}</button>
