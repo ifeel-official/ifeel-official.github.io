@@ -158,7 +158,8 @@ function NavBar() {
 
 // ── Hero ──
 function HeroSection() {
-  const { S, theme } = useI18n();
+  const { S, lang } = useI18n();
+  const heroMockup = lang === 'en' ? 'assets/hero-app-mockup-en.png' : 'assets/hero-app-mockup-ko.png';
   return (
     <section id="top" aria-labelledby="hero-h" style={{ position: 'relative', overflow: 'hidden' }}>
       {/* ambient scan-bracket motif */}
@@ -182,9 +183,7 @@ function HeroSection() {
             )}
           </div>
           <Reveal delay={120} style={{ display: 'flex', justifyContent: 'center' }}>
-            <PhoneFrame w={310} screenDark={theme === 'dark'} glow label={S.a11y.phoneShowcase}>
-              <HeroAppScreen dark={theme === 'dark'} />
-            </PhoneFrame>
+            <img src={heroMockup} alt={S.a11y.phoneShowcase} style={{ width: '100%', maxWidth: 620, height: 'auto', filter: 'drop-shadow(0 30px 60px rgba(16,24,40,0.25))' }} />
           </Reveal>
         </div>
       </div>

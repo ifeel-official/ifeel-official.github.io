@@ -1,6 +1,6 @@
 // kit.jsx — Yaksok primitives, phone frame, and app-screen previews (theme-aware, bilingual)
 // Exports to window: MIcon, Wave, ScanCorners, FabCircle, SegPill, PhoneFrame,
-//   HeroAppScreen, ScannerScreen, OcrScreen, ExpiryScreen, DrugAiScreen, AccessScreen, scrColors, SCR
+//   ScannerScreen, OcrScreen, ExpiryScreen, DrugAiScreen, AccessScreen, scrColors, SCR
 
 // screen-local color tokens (mirror the Yaksok semantic tokens, light/dark)
 function scrColors(dark) {
@@ -15,8 +15,7 @@ const CAMERA = 'rgba(0,0,0,0.85)';
 // bilingual labels used only inside the app-screen previews
 const SCR = {
   ko: {
-    intro: '약속.', tagline: '보이지 않아도\n의약품 식별 어렵지 않아요.', yaksok: 'YAKSOK', next: '다음',
-    point: '바코드를 비춰주세요', tapHint: '화면을 탭하면 스캔을 시작해요', identified: '의약품 식별됨',
+    identified: '의약품 식별됨',
     drugName: '타이레놀정500mg', cat: '해열 · 진통 · 소염제', maker: '한국존슨앤드존슨 · 정제',
     modeRaw: '원문', modeEasy: 'AI', aiLabel: '쉬운 설명',
     aiBody: '이 약은 아프거나 열이 날 때 먹는 약이에요. 한 번에 한 알, 하루 세 번까지 드실 수 있어요.',
@@ -26,8 +25,7 @@ const SCR = {
     ocrLine1: '카페 테이블 위에 따뜻한 아메리카노 한 잔과', ocrLine2: '딸기가 올려진 생크림 케이크가 놓여 있습니다.', ocrLine3: '오른쪽에 포크가 하나 있어요.',
   },
   en: {
-    intro: 'Yaksok.', tagline: 'Identifying medicine\nis easy, even unseen.', yaksok: 'YAKSOK', next: 'Next',
-    point: 'Point at the barcode', tapHint: 'Tap the screen to start scanning', identified: 'IDENTIFIED',
+    identified: 'IDENTIFIED',
     drugName: 'Tylenol 500mg', cat: 'Fever · pain · anti-inflammatory', maker: 'Janssen Korea · Tablet',
     modeRaw: 'Official', modeEasy: 'AI', aiLabel: 'In simple words',
     aiBody: 'This is medicine for when you hurt or have a fever. Take one tablet at a time, up to three times a day.',
@@ -190,26 +188,6 @@ function PhoneFrame({ w = 300, screenDark = false, label, children, glow = false
 }
 
 // ───────────── App-screen previews (logical 300-wide) ─────────────
-
-function HeroAppScreen({ dark }) {
-  const c = scrColors(dark); const s = useScr();
-  return (
-    <div style={{ height: '100%', background: c.surface, display: 'flex', flexDirection: 'column', paddingTop: 44 }}>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '12px 22px 0' }}>
-        <span style={{ fontSize: 30, fontWeight: 700, color: c.text, lineHeight: 1, fontFamily: 'var(--font-sans)' }}>*</span>
-      </div>
-      <div style={{ flex: 1, padding: '0 22px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', paddingBottom: 14 }}>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 'auto', paddingTop: 6 }}>
-          <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.4, color: c.text, fontFamily: 'var(--font-sans)' }}>{s.yaksok}</span>
-        </div>
-        <div style={{ fontSize: 50, fontWeight: 800, color: c.text, letterSpacing: -2, lineHeight: 1.05, fontFamily: 'var(--font-sans)' }}>{s.intro}</div>
-        <div style={{ fontSize: 20, fontWeight: 600, color: c.sub, lineHeight: 1.4, marginTop: 14, whiteSpace: 'pre-line', fontFamily: 'var(--font-sans)' }}>{s.tagline}</div>
-      </div>
-      {/* bottom-bar space preserved (controls removed per request) */}
-      <div aria-hidden="true" style={{ height: 68 }} />
-    </div>
-  );
-}
 
 // Full-width scan-mode bar pinned to the camera view's bottom edge — mirrors
 // the app's ScanModeSwitcher (GlassSegmentedControl, equalWidthSegments,
@@ -405,5 +383,5 @@ function AccessScreen({ dark }) {
 
 Object.assign(window, {
   MIcon, Wave, AnimWave, ScanCorners, FabCircle, SegPill, Dots, PhoneFrame, scrColors, SCR, useScr,
-  HeroAppScreen, ScannerScreen, OcrScreen, ExpiryScreen, DrugAiScreen, AccessScreen, CAMERA,
+  ScannerScreen, OcrScreen, ExpiryScreen, DrugAiScreen, AccessScreen, CAMERA,
 });
