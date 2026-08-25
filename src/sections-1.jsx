@@ -68,8 +68,11 @@ function PlayGlyph({ s = 18 }) {
     </svg>
   );
 }
-function StoreButtons({ block = false, stack = false }) {
+function StoreButtons({ block = false, stack = false, placement = 'hero' }) {
   const { S } = useI18n();
+  const track = (store) => {
+    if (typeof window.gtag === 'function') window.gtag('event', 'store_click', { store, placement });
+  };
   const base = {
     display: 'inline-flex', alignItems: 'center', gap: 11, textDecoration: 'none',
     background: 'var(--text)', color: 'var(--page-bg)', borderRadius: 14,
@@ -81,11 +84,11 @@ function StoreButtons({ block = false, stack = false }) {
   const hov = (e, v) => { e.currentTarget.style.transform = v ? 'translateY(-2px)' : 'translateY(0)'; e.currentTarget.style.opacity = v ? '0.92' : '1'; };
   return (
     <div style={{ display: 'flex', gap: 12, flexDirection: stack ? 'column' : 'row', flexWrap: 'wrap', width: block ? '100%' : 'auto' }}>
-      <a href={APP_STORE} target="_blank" rel="noopener" style={{ ...base, color: 'var(--page-bg)' }} aria-label={`${S.store.apple2} — ${S.store.apple1}`} onMouseEnter={(e) => hov(e, 1)} onMouseLeave={(e) => hov(e, 0)}>
+      <a href={APP_STORE} target="_blank" rel="noopener" style={{ ...base, color: 'var(--page-bg)' }} aria-label={`${S.store.apple2} — ${S.store.apple1}`} onMouseEnter={(e) => hov(e, 1)} onMouseLeave={(e) => hov(e, 0)} onClick={() => track('app_store')}>
         <span style={{ color: 'var(--page-bg)', display: 'flex' }}><AppleGlyph s={24} /></span>
         <span style={{ textAlign: 'left' }}><span style={{ ...sub, display: 'block' }}>{S.store.apple1}</span><span style={main}>{S.store.apple2}</span></span>
       </a>
-      <a href={PLAY_STORE} target="_blank" rel="noopener" style={base} aria-label={`${S.store.google2} — ${S.store.google1}`} onMouseEnter={(e) => hov(e, 1)} onMouseLeave={(e) => hov(e, 0)}>
+      <a href={PLAY_STORE} target="_blank" rel="noopener" style={base} aria-label={`${S.store.google2} — ${S.store.google1}`} onMouseEnter={(e) => hov(e, 1)} onMouseLeave={(e) => hov(e, 0)} onClick={() => track('play_store')}>
         <PlayGlyph s={22} />
         <span style={{ textAlign: 'left' }}><span style={{ ...sub, display: 'block' }}>{S.store.google1}</span><span style={main}>{S.store.google2}</span></span>
       </a>

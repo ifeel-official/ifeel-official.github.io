@@ -363,7 +363,7 @@ function CtaSection() {
           <h2 id="cta-h" style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(30px, 5vw, 50px)', fontWeight: 800, letterSpacing: -1.8, lineHeight: 1.1, color: 'var(--text)', margin: '26px 0 0', textWrap: 'balance' }}>
             {S.cta.heading.map((l, i) => <span key={i} style={{ display: 'block' }}>{l}</span>)}
           </h2>
-          <div style={{ marginTop: 30 }}><StoreButtons /></div>
+          <div style={{ marginTop: 30 }}><StoreButtons placement="download_cta" /></div>
         </Reveal>
       </div>
     </section>

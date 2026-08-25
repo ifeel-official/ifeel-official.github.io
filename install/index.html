@@ -6,6 +6,15 @@
 <title>약속 (Yaksok) 앱 설치</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="../assets/app-icon.png">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NBZS4SHVZ5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NBZS4SHVZ5', { 'send_page_view': false });
+</script>
 <style>
   :root { --bg:#F8FAFC; --text:#1A1A1A; --muted:#6B7280; --primary:#0066FF; }
   @media (prefers-color-scheme: dark) {
@@ -38,6 +47,11 @@
   </main>
 
   <script>
+    // 짧은 링크 코드(?s=코드) → UTM 캠페인 매핑. 새 유입 경로가 생기면 여기에 한 줄만 추가.
+    var SHORT_CODES = {
+      nm: { source: 'neolbeunmaeul', medium: 'community', campaign: 'feedback_request_post' }
+    };
+
     var APP_STORE_URL = 'https://apps.apple.com/kr/app/id6770225626';
     var PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=kr.co.devstory.ifeel.app';
     var HOME_URL = '/';
@@ -52,8 +66,35 @@
 
     document.getElementById('fallback-link').href = target;
 
+    var shortCode = new URLSearchParams(location.search).get('s');
+    var shortInfo = shortCode ? SHORT_CODES[shortCode] : null;
+
+    var pageViewParams = { 'page_path': location.pathname };
+    if (shortInfo) {
+      pageViewParams.campaign = {
+        'source': shortInfo.source,
+        'medium': shortInfo.medium,
+        'name': shortInfo.campaign
+      };
+    }
+
+    var redirected = false;
+    function doRedirect() {
+      if (redirected) return;
+      redirected = true;
+      if (isIOS || isAndroid) location.replace(target);
+    }
+
+    if (shortCode) pageViewParams.link_code = shortCode;
+
     if (isIOS || isAndroid) {
-      location.replace(target);
+      pageViewParams.store = isIOS ? 'app_store' : 'play_store';
+      pageViewParams.event_callback = doRedirect;
+      pageViewParams.event_timeout = 1000;
+      gtag('event', 'page_view', pageViewParams);
+      setTimeout(doRedirect, 1000);
+    } else {
+      gtag('event', 'page_view', pageViewParams);
     }
   </script>
 </body>
