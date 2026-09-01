@@ -202,7 +202,7 @@ function StatCard({ n, l, big }) {
       padding: big ? '26px 24px' : '22px 22px', boxShadow: 'var(--shadow-card)', display: 'flex', flexDirection: 'column', gap: 8, height: '100%',
     }}>
       <span style={{ fontFamily: 'var(--font-sans)', fontSize: big ? 'clamp(34px, 4.6vw, 46px)' : 'clamp(28px, 3.6vw, 38px)', fontWeight: 800, letterSpacing: -1.4, color: 'var(--primary)', lineHeight: 1 }}>{n}</span>
-      <span style={{ fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 500, color: 'var(--sub-text)', lineHeight: 1.45, textWrap: 'pretty' }}>{l}</span>
+      <span style={{ fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 500, color: 'var(--sub-text)', lineHeight: 1.45, textWrap: 'pretty', whiteSpace: 'pre-line' }}>{l}</span>
     </div>
   );
 }
