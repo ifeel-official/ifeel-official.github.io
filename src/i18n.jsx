@@ -27,9 +27,13 @@ const STRINGS = {
     },
 
     problem: {
-      eyebrow: '약은 안전해야 합니다',
-      heading: ['시각장애인에게도, 고령층에게도,', '약은 안전해야 해요.'],
-      intro: '4만개가 넘는 의약품 중 점자 표기 의약품은 35개 뿐이고,\n10종 이상 다제약물 복용 만성질환자가 171만명으로 늘었지만, 전문 용어가 가득한 의약품 설명서는 아무리 읽어봐도 함께 복약하면 안되는 약물조차 식별하기 어렵습니다.',
+      eyebrow: 'Why Yaksok',
+      heading: [['시각장애인', '에게'], '약 정보는 닿지 않습니다.'],
+      points: [
+        [{ t: '무슨 ' }, { t: '약인지 식별할 수 없어요', hi: true }],
+        [{ t: '언제까지 먹어도 되는지 ' }, { t: '사용 기한을 알 수 없어요', hi: true }],
+        [{ t: '어려운 복약 설명서', hi: true }, { t: '는 접근조차 불가능해요' }],
+      ],
       stats: [
         { n: '0.1%', l: '의약품 4만여 종 중\n점자 표기가 된 의약품 비율' },
         { n: '54%', l: '의약품을 구별하지 못해\n먹는 걸 포기한 경험이 있는 비율' },
@@ -162,8 +166,12 @@ const STRINGS = {
 
     problem: {
       eyebrow: 'Why Yaksok',
-      heading: ['For the blind, for older adults —', 'medicine should be safe.'],
-      intro: 'Tiny print and look-alike pills are made for people who can see and manage them on their own. Yaksok is built for blind and older adults: point your phone at a medicine, and it identifies the drug and reads the dosage and warnings aloud, in plain language.',
+      heading: [['Blind people', ' never reach'], "their medicine's information."],
+      points: [
+        [{ t: "Can't tell " }, { t: 'which medicine it is', hi: true }],
+        [{ t: 'No way to know ' }, { t: 'the expiry date', hi: true }],
+        [{ t: 'Dense leaflets', hi: true }, { t: " aren't even accessible" }],
+      ],
       stats: [
         { n: '0.1%', l: 'of the 40,000+ medicines on the market carry braille labelling' },
         { n: '54%', l: 'have given up on taking a medicine because they could not tell it apart' },

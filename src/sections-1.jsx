@@ -215,9 +215,22 @@ function ProblemSection() {
       <div style={{ maxWidth: 'var(--max)', margin: '0 auto', padding: '96px 22px 100px' }}>
         <Reveal><Eyebrow>{p.eyebrow}</Eyebrow></Reveal>
         <Reveal as="h2" id="problem-h" delay={60} style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(31px, 4.6vw, 50px)', fontWeight: 800, letterSpacing: -1.8, lineHeight: 1.12, color: 'var(--text)', margin: '16px 0 0', textWrap: 'balance' }}>
-          {p.heading.map((l, i) => <span key={i} style={{ display: 'block', color: i === 1 ? 'var(--primary)' : 'var(--text)' }}>{l}</span>)}
+          {p.heading.map((l, i) => (
+            <span key={i} style={{ display: 'block', color: 'var(--text)' }}>
+              {Array.isArray(l) ? <><span style={{ color: 'var(--primary)' }}>{l[0]}</span>{l[1]}</> : l}
+            </span>
+          ))}
         </Reveal>
-        <Reveal as="p" delay={120} style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(17px, 1.7vw, 20px)', lineHeight: 1.6, color: 'var(--sub-text)', margin: '24px 0 0', maxWidth: 620, textWrap: 'pretty' }}>{p.intro}</Reveal>
+        <ol style={{ listStyle: 'none', margin: '40px 0 0', padding: 0, borderTop: '1px solid var(--hairline)' }}>
+          {p.points.map((segs, i) => (
+            <Reveal as="li" key={i} delay={90 + i * 70} style={{ display: 'flex', gap: 'clamp(14px, 2vw, 28px)', alignItems: 'baseline', padding: '22px 2px', borderBottom: '1px solid var(--hairline)' }}>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 800, letterSpacing: 0.5, color: 'var(--primary)', flexShrink: 0 }}>{String(i + 1).padStart(2, '0')}</span>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(17px, 2.2vw, 22px)', fontWeight: 700, letterSpacing: -0.4, lineHeight: 1.4, color: 'var(--text)', textWrap: 'pretty' }}>
+                {segs.map((sg, j) => <span key={j} style={sg.hi ? { color: 'var(--primary)' } : undefined}>{sg.t}</span>)}
+              </span>
+            </Reveal>
+          ))}
+        </ol>
 
         <div className="stat-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginTop: 60 }}>
           {p.stats.map((s, i) => <Reveal key={i} delay={i * 90}><StatCard n={s.n} l={s.l} big /></Reveal>)}
